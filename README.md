@@ -1,0 +1,2 @@
+candice mysql分库分表中间件
+基于netty, 借鉴cobar以及heisenberg实现
