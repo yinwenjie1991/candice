@@ -1,25 +1,18 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dml;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.fragment.GroupBy;
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.OrderBy;
-import com.baidu.hsb.parser.ast.fragment.tableref.TableReferences;
-import com.baidu.hsb.parser.util.Pair;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.fragment.GroupBy;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.OrderBy;
+import io.candice.parser.ast.fragment.tableref.TableReferences;
+import io.candice.parser.util.Pair;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class DMLSelectStatement extends DMLQueryStatement {
     public static enum SelectDuplicationStrategy {
         /** default */
@@ -152,7 +145,6 @@ public class DMLSelectStatement extends DMLQueryStatement {
         return limit;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

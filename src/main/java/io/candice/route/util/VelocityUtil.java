@@ -1,6 +1,6 @@
 package io.candice.route.util;
 
-import com.baidu.hsb.config.model.config.TableRuleConfig;
+import io.candice.config.model.TableRuleConfig;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;

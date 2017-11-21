@@ -1,15 +1,8 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.tableref;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class StraightJoin implements TableReference {
     private final TableReference leftTableRef;
     private final TableReference rightTableRef;
@@ -38,7 +31,6 @@ public class StraightJoin implements TableReference {
         return onCond;
     }
 
-    @Override
     public Object removeLastConditionElement() {
         if (onCond != null) {
             Object obj = onCond;
@@ -48,17 +40,14 @@ public class StraightJoin implements TableReference {
         return null;
     }
 
-    @Override
     public boolean isSingleTable() {
         return false;
     }
 
-    @Override
     public int getPrecedence() {
         return TableReference.PRECEDENCE_JOIN;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

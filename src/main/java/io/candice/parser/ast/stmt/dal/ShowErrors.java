@@ -1,15 +1,8 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dal;
 
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class ShowErrors extends DALShowStatement {
     private final boolean count;
     private final Limit limit;
@@ -27,7 +20,6 @@ public class ShowErrors extends DALShowStatement {
         return limit;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

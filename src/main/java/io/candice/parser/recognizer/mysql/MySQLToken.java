@@ -1,12 +1,5 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public enum MySQLToken {
     EOF,
     PLACE_HOLDER,

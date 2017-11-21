@@ -1,20 +1,13 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dml;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class DMLCallStatement extends DMLStatement {
     private final Identifier procedure;
     private final List<Expression> arguments;
@@ -46,7 +39,6 @@ public class DMLCallStatement extends DMLStatement {
         return arguments;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

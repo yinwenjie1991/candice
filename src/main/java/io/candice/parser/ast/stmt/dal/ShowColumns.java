@@ -1,16 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dal;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class ShowColumns extends DALShowStatement {
     private final boolean full;
     private final Identifier table;
@@ -63,7 +56,6 @@ public class ShowColumns extends DALShowStatement {
         return where;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

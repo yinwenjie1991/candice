@@ -1,16 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public final class ListUtil {
 
     @SuppressWarnings("rawtypes")

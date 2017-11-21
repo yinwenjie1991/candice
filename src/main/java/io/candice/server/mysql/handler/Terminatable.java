@@ -6,4 +6,7 @@ package io.candice.server.mysql.handler;
  * 日期: 2017-11-03
  */
 public interface Terminatable {
+
+    void terminate(Runnable runnable);
+
 }

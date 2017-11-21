@@ -119,13 +119,13 @@ public class CharacterSet {
     private static void setCharset(String charset, ServerConnection c) {
         if ("null".equalsIgnoreCase(charset)) {
             /* 忽略字符集为null的属性设置 */
-            c.write(c.writeToBuffer(OkPacket.OK, c.allocate()));
+            c.write(OkPacket.OK);
         } else if (c.setCharset(charset)) {
-            c.write(c.writeToBuffer(OkPacket.OK, c.allocate()));
+            c.write(OkPacket.OK);
         } else {
             try {
                 if (c.setCharsetIndex(Integer.parseInt(charset))) {
-                    c.write(c.writeToBuffer(OkPacket.OK, c.allocate()));
+                    c.write(OkPacket.OK);
                 } else {
                     c.writeErrMessage(ErrorCode.ER_UNKNOWN_CHARACTER_SET, "Unknown charset :" + charset);
                 }

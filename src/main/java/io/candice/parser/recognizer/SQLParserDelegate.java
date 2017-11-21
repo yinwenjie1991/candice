@@ -1,11 +1,26 @@
 package io.candice.parser.recognizer;
 
-import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
-import io.candice.parser.recognizer.mysql.syntax.MySQLExprParser;
-
 import java.sql.SQLSyntaxErrorException;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.candice.parser.ast.stmt.SQLStatement;
+import io.candice.parser.ast.stmt.ddl.DDLCreateIndexStatement;
+import io.candice.parser.ast.stmt.ddl.DDLStatement;
+import io.candice.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDALParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDDLParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDMLCallParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDMLDeleteParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDMLInsertParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDMLReplaceParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDMLSelectParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLDMLUpdateParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLExprParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLMTSParser;
+import io.candice.parser.recognizer.mysql.syntax.MySQLParser;
+
 
 public final class SQLParserDelegate {
     private static enum SpecialIdentifier {

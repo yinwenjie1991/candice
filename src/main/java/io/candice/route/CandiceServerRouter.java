@@ -5,13 +5,11 @@ import java.sql.SQLNonTransientException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import io.candice.config.model.config.SchemaConfig;
-import io.candice.config.model.config.TableConfig;
-import io.candice.config.model.config.TableRuleConfig;
-import io.candice.mysql.MySQLDataNode;
+import io.candice.config.model.SchemaConfig;
+import io.candice.config.model.TableConfig;
+import io.candice.config.model.TableRuleConfig;
 import io.candice.parser.ast.expression.Expression;
 import io.candice.parser.ast.expression.primary.Identifier;
 import io.candice.parser.ast.stmt.SQLStatement;
@@ -24,13 +22,15 @@ import io.candice.parser.recognizer.SQLParserDelegate;
 import io.candice.parser.recognizer.mysql.syntax.MySQLParser;
 import io.candice.parser.util.Pair;
 import io.candice.parser.visitor.MySQLOutputASTVisitor;
-import io.candice.route.context.HeisenbergContext;
+import io.candice.route.context.CandiceContext;
 import io.candice.route.router.MetaRouter;
 import io.candice.route.util.SqlUtil;
 import io.candice.route.util.StringUtil;
 import io.candice.route.util.VelocityUtil;
 import io.candice.route.util.WeightHelper;
 import io.candice.route.visitor.PartitionKeyVisitor;
+import io.candice.server.mysql.MySQLDataNode;
+
 
 /**
  * 文件描述: 节点路由器
@@ -183,7 +183,7 @@ public class CandiceServerRouter {
      *
      *
      * @param rrs
-     * @param matchedTable
+     * @param tc
      * @param columnValues
      */
     private static void shard(boolean isRead, SchemaConfig schema, RouteResultset rrs,
@@ -210,7 +210,7 @@ public class CandiceServerRouter {
      *
      *
      * @param tc
-     * @param parameter
+     * @param columnValues
      * @return
      */
     private static Integer[] cacDataNodes(TableConfig tc, Map<String, List<Object>> columnValues) {

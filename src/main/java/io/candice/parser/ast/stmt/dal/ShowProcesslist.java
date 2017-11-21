@@ -1,14 +1,7 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dal;
 
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class ShowProcesslist extends DALShowStatement {
     private final boolean full;
 
@@ -20,7 +13,6 @@ public class ShowProcesslist extends DALShowStatement {
         return full;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

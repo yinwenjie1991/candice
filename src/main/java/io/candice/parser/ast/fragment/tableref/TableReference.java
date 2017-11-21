@@ -1,14 +1,7 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.tableref;
 
-import com.baidu.hsb.parser.ast.ASTNode;
+import io.candice.parser.ast.ASTNode;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public interface TableReference extends ASTNode {
     int PRECEDENCE_REFS = 0;
     int PRECEDENCE_JOIN = 1;
@@ -18,7 +11,7 @@ public interface TableReference extends ASTNode {
      * remove last condition element is success
      * 
      * @return {@link java.util.List List&lt;String&gt;} or
-     *         {@link com.baidu.hsb.parser.ast.expression.Expression
+     *         {@link io.candice.parser.ast.expression.Expression
      *         Expression}. null if last condition element cannot be removed.
      */
     Object removeLastConditionElement();

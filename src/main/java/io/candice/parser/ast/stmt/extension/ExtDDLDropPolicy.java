@@ -1,16 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.extension;
 
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.stmt.ddl.DDLStatement;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.stmt.ddl.DDLStatement;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class ExtDDLDropPolicy implements DDLStatement {
     private final Identifier policyName;
 
@@ -22,7 +15,6 @@ public class ExtDDLDropPolicy implements DDLStatement {
         return policyName;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

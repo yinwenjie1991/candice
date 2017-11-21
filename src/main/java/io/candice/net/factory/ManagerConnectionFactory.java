@@ -9,8 +9,7 @@ import io.candice.net.connection.FrontendConnection;
  */
 public class ManagerConnectionFactory extends FrontendConnectionFactory{
 
-    @Override
-    protected void connectionConfig(FrontendConnection frontendConnection) {
-
+    protected FrontendConnection getConnection() {
+        return null;
     }
 }

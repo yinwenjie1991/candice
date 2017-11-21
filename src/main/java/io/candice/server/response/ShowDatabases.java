@@ -1,29 +1,22 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.server.response;
 
-import com.baidu.hsb.HeisenbergConfig;
-import com.baidu.hsb.HeisenbergServer;
-import com.baidu.hsb.config.Fields;
-import com.baidu.hsb.config.model.config.UserConfig;
-import com.baidu.hsb.mysql.PacketUtil;
-import com.baidu.hsb.net.mysql.EOFPacket;
-import com.baidu.hsb.net.mysql.FieldPacket;
-import com.baidu.hsb.net.mysql.ResultSetHeaderPacket;
-import com.baidu.hsb.net.mysql.RowDataPacket;
-import com.baidu.hsb.server.ServerConnection;
-import com.baidu.hsb.util.StringUtil;
+import io.candice.CandiceServer;
+import io.candice.config.CandiceConfig;
+import io.candice.config.Fields;
+import io.candice.config.model.UserConfig;
+import io.candice.net.connection.ServerConnection;
+import io.candice.net.mysql.EOFPacket;
+import io.candice.net.mysql.FieldPacket;
+import io.candice.net.mysql.ResultSetHeaderPacket;
+import io.candice.net.mysql.RowDataPacket;
+import io.candice.util.PacketUtil;
+import io.candice.util.StringUtil;
+import io.netty.buffer.ByteBuf;
 
-import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class ShowDatabases {
 
     private static final int FIELD_COUNT = 1;
@@ -40,22 +33,22 @@ public class ShowDatabases {
     }
 
     public static void response(ServerConnection c) {
-        ByteBuffer buffer = c.allocate();
 
+        ByteBuf buf = c.getChannelHandlerContext().alloc().buffer();
         // write header
-        buffer = header.write(buffer, c);
+        buf = header.writeBuf(buf);
 
         // write fields
         for (FieldPacket field : fields) {
-            buffer = field.write(buffer, c);
+            buf = field.writeBuf(buf);
         }
 
         // write eof
-        buffer = eof.write(buffer, c);
+        buf = eof.writeBuf(buf);
 
         // write rows
         byte packetId = eof.packetId;
-        HeisenbergConfig conf = HeisenbergServer.getInstance().getConfig();
+        CandiceConfig conf = CandiceServer.getInstance().getConfig();
         Map<String, UserConfig> users = conf.getUsers();
         UserConfig user = users == null ? null : users.get(c.getUser());
         if (user != null) {
@@ -72,17 +65,17 @@ public class ShowDatabases {
                 RowDataPacket row = new RowDataPacket(FIELD_COUNT);
                 row.add(StringUtil.encode(name, c.getCharset()));
                 row.packetId = ++packetId;
-                buffer = row.write(buffer, c);
+                buf = row.writeBuf(buf);
             }
         }
 
         // write last eof
         EOFPacket lastEof = new EOFPacket();
         lastEof.packetId = ++packetId;
-        buffer = lastEof.write(buffer, c);
+        buf = lastEof.writeBuf(buf);
 
         // post write
-        c.write(buffer);
+        c.writeByteBuf(buf);
     }
 
 }

@@ -1,13 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.arithmeic;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.UnaryOperatorExpression;
-import com.baidu.hsb.parser.util.ExprEvalUtils;
-import com.baidu.hsb.parser.util.UnaryOperandCalculator;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.UnaryOperatorExpression;
+import io.candice.parser.util.ExprEvalUtils;
+import io.candice.parser.util.UnaryOperandCalculator;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -45,7 +41,6 @@ public class MinusExpression extends UnaryOperatorExpression implements UnaryOpe
         return ExprEvalUtils.calculate(this, num);
     }
 
-    @Override
     public Number calculate(Integer num) {
         if (num == null)
             return null;
@@ -56,7 +51,6 @@ public class MinusExpression extends UnaryOperatorExpression implements UnaryOpe
         return new Integer(-n);
     }
 
-    @Override
     public Number calculate(Long num) {
         if (num == null)
             return null;
@@ -67,14 +61,12 @@ public class MinusExpression extends UnaryOperatorExpression implements UnaryOpe
         return new Long(-n);
     }
 
-    @Override
     public Number calculate(BigInteger num) {
         if (num == null)
             return null;
         return num.negate();
     }
 
-    @Override
     public Number calculate(BigDecimal num) {
         if (num == null)
             return null;

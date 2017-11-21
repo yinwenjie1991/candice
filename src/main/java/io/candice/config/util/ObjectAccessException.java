@@ -7,7 +7,7 @@ package io.candice.config.util;
  */
 public class ObjectAccessException extends RuntimeException{
 
-
+    private static final long serialVersionUID = 1151249659203914336L;
 
     public ObjectAccessException(String message) {
         super(message);

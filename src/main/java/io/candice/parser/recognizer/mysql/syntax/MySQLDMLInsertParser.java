@@ -1,27 +1,20 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.misc.QueryExpression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.expression.primary.RowExpression;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLInsertStatement;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
-import com.baidu.hsb.parser.util.Pair;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.misc.QueryExpression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.expression.primary.RowExpression;
+import io.candice.parser.ast.stmt.dml.DMLInsertStatement;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.util.Pair;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class MySQLDMLInsertParser extends MySQLDMLInsertReplaceParser {
     public MySQLDMLInsertParser(MySQLLexer lexer, MySQLExprParser exprParser) {
         super(lexer, exprParser);

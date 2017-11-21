@@ -4,12 +4,11 @@ import io.candice.config.ErrorCode;
 import io.candice.net.connection.FrontendConnection;
 import io.candice.net.connection.MySQLConnection;
 import io.candice.net.connection.ServerConnection;
+import io.candice.net.mysql.OkPacket;
 import io.candice.route.RouteResultset;
 import io.candice.route.RouteResultsetNode;
-import io.candice.server.mysql.handler.CommitNodeHandler;
-import io.candice.server.mysql.handler.MultiNodeQueryHandler;
-import io.candice.server.mysql.handler.RollbackNodeHandler;
-import io.candice.server.mysql.handler.SingleNodeHandler;
+import io.candice.server.mysql.handler.*;
+import io.candice.server.parser.ServerParse;
 import org.apache.log4j.Logger;
 
 import java.util.Set;
@@ -77,20 +76,42 @@ public class NonBlockingSession implements Session {
         }
         try {
             if (nodes.length == 1 && nodes[0].getSqlCount() == 1) {
-
+                //单点路由
+                singleNodeHandler = new SingleNodeHandler(nodes[0], this);
+                singleNodeHandler.execute();
+            } else {
+                boolean autocommit = source.isAutocommit();
+                if (autocommit && isModifySQL(type)) {
+                    autocommit = false;
+                }
+                multiNodeHandler = new MultiNodeQueryHandler(nodes, autocommit, this);
+                multiNodeHandler.execute();
             }
         } catch (Exception e) {
             LOGGER.error("sql[" + sql + "]异常", e);
+            e.printStackTrace();
             source.writeErrMessage(ErrorCode.ER_EXEC_ERROR, "NoBlockingSession execute error!");
         }
     }
 
     public void commit() {
-
+        final int initCount = target.size();
+        if (initCount <= 0) {
+            source.write(OkPacket.OK);
+            return;
+        }
+        commitHandler = new CommitNodeHandler(this);
+        commitHandler.commit();
     }
 
     public void rollback() {
-
+        final int initCount = target.size();
+        if (initCount <= 0) {
+            source.write(OkPacket.OK);
+            return;
+        }
+        rollbackHandler = new RollbackNodeHandler(this);
+        rollbackHandler.rollback();
     }
 
     public void cancel(FrontendConnection sponsor) {
@@ -99,5 +120,98 @@ public class NonBlockingSession implements Session {
 
     public void terminate() {
 
+    }
+
+    public boolean closeConnection(RouteResultsetNode key) {
+        MySQLConnection conn = target.remove(key);
+        if (conn != null) {
+            conn.close();
+            return true;
+        }
+        return false;
+    }
+
+    public void setConnectionRunning(RouteResultsetNode[] route) {
+        for (RouteResultsetNode rrn : route) {
+            MySQLConnection c = target.get(rrn);
+            if (c != null) {
+                c.setRunning(true);
+            }
+        }
+    }
+
+    public MySQLConnection bindConnection(RouteResultsetNode key, MySQLConnection conn) {
+        return target.put(key, conn);
+    }
+
+    public void clearConnections() {
+        clearConnections(true);
+    }
+
+    private void clearConnections(boolean pessimisticRelease) {
+        for (RouteResultsetNode node : target.keySet()) {
+            MySQLConnection c = target.remove(node);
+
+            if (c == null || c.isClosedOrQuit()) {
+                continue;
+            }
+
+            // 如果通道正在运行中，则关闭当前通道。
+            // 清空连接目前只需要释放并不关闭
+//            if (c.isRunning() || (pessimisticRelease && closed())) {
+//                c.close();
+//                continue;
+//            }
+            // 非事务中的通道，直接释放资源。
+            if (c.isAutocommit()) {
+                c.release();
+                continue;
+            }
+            //事务则回滚
+            c.setHandler(new RollbackReleaseHandler());
+            c.rollback();
+        }
+    }
+
+    public void releaseConnections() {
+        for (RouteResultsetNode rrn : target.keySet()) {
+            MySQLConnection c = target.remove(rrn);
+            if (c != null) {
+                if (c.isRunning()) {
+                    c.close();
+                    try {
+                        throw new IllegalStateException("running connection is found: " + c);
+                    } catch (Exception e) {
+                        LOGGER.error(e.getMessage(), e);
+                    }
+                } else if (!c.isClosedOrQuit()) {
+                    if (source.isClosed()) {
+                        c.quit();
+                    } else {
+                        c.release();
+                    }
+                }
+            }
+        }
+    }
+
+
+    public boolean closed() {
+        if ( source == null || source.getChannelHandlerContext() == null) {
+            return true;
+        }
+        return !source.getChannelHandlerContext().channel().isOpen();
+    }
+
+    private static boolean isModifySQL(int type) {
+        switch (type) {
+            case ServerParse.INSERT:
+            case ServerParse.DELETE:
+            case ServerParse.UPDATE:
+            case ServerParse.REPLACE:
+                return true;
+            default:
+                return false;
+        }
     }
 }

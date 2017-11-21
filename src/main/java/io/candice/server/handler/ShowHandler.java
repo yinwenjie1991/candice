@@ -1,20 +1,11 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.server.handler;
 
-import com.baidu.hsb.server.ServerConnection;
-import com.baidu.hsb.server.parser.ServerParse;
-import com.baidu.hsb.server.parser.ServerParseShow;
-import com.baidu.hsb.server.response.ShowCobarCluster;
-import com.baidu.hsb.server.response.ShowCobarStatus;
-import com.baidu.hsb.server.response.ShowDataSources;
-import com.baidu.hsb.server.response.ShowDatabases;
+import io.candice.net.connection.ServerConnection;
+import io.candice.net.mysql.OkPacket;
+import io.candice.server.parser.ServerParse;
+import io.candice.server.parser.ServerParseShow;
+import io.candice.server.response.ShowDatabases;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public final class ShowHandler {
 
     public static void handle(String stmt, ServerConnection c, int offset) {
@@ -23,13 +14,11 @@ public final class ShowHandler {
             ShowDatabases.response(c);
             break;
         case ServerParseShow.DATASOURCES:
-            ShowDataSources.response(c);
-            break;
         case ServerParseShow.COBAR_STATUS:
-            ShowCobarStatus.response(c);
-            break;
         case ServerParseShow.COBAR_CLUSTER:
-            ShowCobarCluster.response(c);
+            // 目前不做处理
+            c.write(OkPacket.OK);
+
             break;
         default:
             c.execute(stmt, ServerParse.SHOW);

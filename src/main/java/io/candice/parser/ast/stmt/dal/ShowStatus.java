@@ -1,16 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dal;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.fragment.VariableScope;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.fragment.VariableScope;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class ShowStatus extends DALShowStatement {
     private final VariableScope scope;
     private final String pattern;
@@ -46,7 +39,6 @@ public class ShowStatus extends DALShowStatement {
         return where;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

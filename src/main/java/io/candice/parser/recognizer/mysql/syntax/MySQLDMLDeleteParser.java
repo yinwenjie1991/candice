@@ -1,17 +1,13 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.OrderBy;
-import com.baidu.hsb.parser.ast.fragment.tableref.TableReferences;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLDeleteStatement;
-import com.baidu.hsb.parser.recognizer.mysql.MySQLToken;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.OrderBy;
+import io.candice.parser.ast.fragment.tableref.TableReferences;
+import io.candice.parser.ast.stmt.dml.DMLDeleteStatement;
+import io.candice.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
@@ -19,11 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class MySQLDMLDeleteParser extends MySQLDMLParser {
     public MySQLDMLDeleteParser(MySQLLexer lexer, MySQLExprParser exprParser) {
         super(lexer, exprParser);

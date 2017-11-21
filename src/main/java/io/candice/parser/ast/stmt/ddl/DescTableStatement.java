@@ -1,16 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.ddl;
 
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.stmt.SQLStatement;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.stmt.SQLStatement;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class DescTableStatement implements SQLStatement {
     private final Identifier table;
 
@@ -23,7 +16,6 @@ public class DescTableStatement implements SQLStatement {
         return table;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

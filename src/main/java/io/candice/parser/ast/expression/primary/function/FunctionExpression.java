@@ -1,20 +1,13 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary.function;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.PrimaryExpression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.PrimaryExpression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public abstract class FunctionExpression extends PrimaryExpression {
     protected static List<Expression> wrapList(Expression expr) {
         List<Expression> list = new ArrayList<Expression>(1);
@@ -63,7 +56,6 @@ public abstract class FunctionExpression extends PrimaryExpression {
         return super.setCacheEvalRst(cacheEvalRst);
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

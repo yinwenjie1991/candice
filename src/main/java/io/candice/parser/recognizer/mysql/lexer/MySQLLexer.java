@@ -1,11 +1,6 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.lexer;
-
-import com.baidu.hsb.parser.recognizer.mysql.MySQLToken;
-import com.baidu.hsb.parser.util.CharTypes;
+import io.candice.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.util.CharTypes;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,8 +8,7 @@ import java.sql.SQLSyntaxErrorException;
 
 /**
  * support MySQL 5.5 token
- * 
- * @author xiongzhao@baidu.com
+ *
  */
 public class MySQLLexer {
     private static int C_STYLE_COMMENT_VERSION = 50599;

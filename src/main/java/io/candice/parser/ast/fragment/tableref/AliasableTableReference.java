@@ -1,15 +1,8 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.tableref;
 
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.expression.primary.literal.LiteralString;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.expression.primary.literal.LiteralString;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public abstract class AliasableTableReference implements TableReference {
     protected final String alias;
     protected String aliasUpEscape;

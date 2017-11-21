@@ -1,6 +1,13 @@
 package io.candice.parser.ast.fragment;
 
+import io.candice.parser.ast.ASTNode;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.util.Pair;
+import io.candice.parser.visitor.SQLASTVisitor;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class OrderBy implements ASTNode {
     /** might be {@link LinkedList} */
@@ -35,7 +42,6 @@ public class OrderBy implements ASTNode {
         return this;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

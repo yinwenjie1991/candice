@@ -1,14 +1,7 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.server.parser;
 
-import com.baidu.hsb.parser.util.ParseUtil;
+import io.candice.parser.util.ParseUtil;
 
-/**
- * @author xiongzhao@baidu.com 2011-5-7 下午01:22:57
- */
 public final class ServerParseSet {
 
     public static final int OTHER = -1;

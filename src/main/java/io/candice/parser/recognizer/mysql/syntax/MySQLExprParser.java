@@ -1,50 +1,44 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.arithmeic.*;
-import com.baidu.hsb.parser.ast.expression.bit.*;
-import com.baidu.hsb.parser.ast.expression.comparison.*;
-import com.baidu.hsb.parser.ast.expression.logical.*;
-import com.baidu.hsb.parser.ast.expression.misc.*;
-import com.baidu.hsb.parser.ast.expression.primary.*;
-import com.baidu.hsb.parser.ast.expression.primary.MatchExpression.Modifier;
-import com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression;
-import com.baidu.hsb.parser.ast.expression.primary.function.cast.Cast;
-import com.baidu.hsb.parser.ast.expression.primary.function.cast.Convert;
-import com.baidu.hsb.parser.ast.expression.primary.function.comparison.Interval;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.groupby.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.info.CurrentUser;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Char;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Locate;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Substring;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Trim;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Trim.Direction;
-import com.baidu.hsb.parser.ast.expression.primary.literal.*;
-import com.baidu.hsb.parser.ast.expression.string.LikeExpression;
-import com.baidu.hsb.parser.ast.expression.string.RegexpExpression;
-import com.baidu.hsb.parser.ast.expression.string.SoundsLikeExpression;
-import com.baidu.hsb.parser.ast.expression.type.CastBinaryExpression;
-import com.baidu.hsb.parser.ast.expression.type.CollateExpression;
-import com.baidu.hsb.parser.recognizer.mysql.MySQLFunctionManager;
-import com.baidu.hsb.parser.recognizer.mysql.MySQLToken;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
-import com.baidu.hsb.parser.util.Pair;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.arithmeic.*;
+import io.candice.parser.ast.expression.bit.*;
+import io.candice.parser.ast.expression.comparison.*;
+import io.candice.parser.ast.expression.logical.*;
+import io.candice.parser.ast.expression.misc.*;
+import io.candice.parser.ast.expression.primary.*;
+import io.candice.parser.ast.expression.primary.function.FunctionExpression;
+import io.candice.parser.ast.expression.primary.function.cast.Cast;
+import io.candice.parser.ast.expression.primary.function.cast.Convert;
+import io.candice.parser.ast.expression.primary.function.comparison.Interval;
+import io.candice.parser.ast.expression.primary.function.datetime.*;
+import io.candice.parser.ast.expression.primary.function.groupby.*;
+import io.candice.parser.ast.expression.primary.function.info.CurrentUser;
+import io.candice.parser.ast.expression.primary.function.string.Char;
+import io.candice.parser.ast.expression.primary.function.string.Locate;
+import io.candice.parser.ast.expression.primary.function.string.Substring;
+import io.candice.parser.ast.expression.primary.function.string.Trim;
+import io.candice.parser.ast.expression.primary.literal.*;
+import io.candice.parser.ast.expression.string.LikeExpression;
+import io.candice.parser.ast.expression.string.RegexpExpression;
+import io.candice.parser.ast.expression.string.SoundsLikeExpression;
+import io.candice.parser.ast.expression.type.CastBinaryExpression;
+import io.candice.parser.ast.expression.type.CollateExpression;
+import io.candice.parser.recognizer.mysql.MySQLFunctionManager;
+import io.candice.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.util.Pair;
+import io.candice.parser.ast.expression.primary.function.string.Trim.Direction;
+import io.candice.parser.ast.expression.primary.MatchExpression.Modifier;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
 
-/**
- * @author xiongzhao@baidu.com
- */
+
 public class MySQLExprParser extends MySQLParser {
     public MySQLExprParser(MySQLLexer lexer) {
         this(lexer, MySQLFunctionManager.INSTANCE_MYSQL_DEFAULT, true, DEFAULT_CHARSET);

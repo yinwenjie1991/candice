@@ -1,34 +1,65 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.expression.primary.literal.Literal;
-import com.baidu.hsb.parser.ast.expression.primary.literal.LiteralString;
-import com.baidu.hsb.parser.ast.fragment.ddl.ColumnDefinition;
-import com.baidu.hsb.parser.ast.fragment.ddl.TableOptions;
-import com.baidu.hsb.parser.ast.fragment.ddl.datatype.DataType;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexColumnName;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexDefinition;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexOption;
-import com.baidu.hsb.parser.ast.stmt.ddl.*;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLSelectStatement;
-import com.baidu.hsb.parser.ast.stmt.extension.ExtDDLCreatePolicy;
-import com.baidu.hsb.parser.ast.stmt.extension.ExtDDLDropPolicy;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
-import com.baidu.hsb.parser.util.Pair;
+import static io.candice.parser.recognizer.mysql.MySQLToken.EOF;
+import static io.candice.parser.recognizer.mysql.MySQLToken.IDENTIFIER;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_AS;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_BINARY;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_CHARACTER;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_COLLATE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_COLUMN;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_DEFAULT;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_EXISTS;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_IF;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_IGNORE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_INDEX;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_KEY;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_KEYS;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_NOT;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_ON;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_SET;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_TABLE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_TO;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_UNSIGNED;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_USING;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_ZEROFILL;
+import static io.candice.parser.recognizer.mysql.MySQLToken.LITERAL_NULL;
+import static io.candice.parser.recognizer.mysql.MySQLToken.LITERAL_NUM_PURE_DIGIT;
+import static io.candice.parser.recognizer.mysql.MySQLToken.OP_EQUALS;
+import static io.candice.parser.recognizer.mysql.MySQLToken.PUNC_COMMA;
+import static io.candice.parser.recognizer.mysql.MySQLToken.PUNC_LEFT_PAREN;
+import static io.candice.parser.recognizer.mysql.MySQLToken.PUNC_RIGHT_PAREN;
 
 import java.sql.SQLSyntaxErrorException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.expression.primary.literal.Literal;
+import io.candice.parser.ast.expression.primary.literal.LiteralString;
+import io.candice.parser.ast.fragment.ddl.ColumnDefinition;
+import io.candice.parser.ast.fragment.ddl.TableOptions;
+import io.candice.parser.ast.fragment.ddl.datatype.DataType;
+import io.candice.parser.ast.fragment.ddl.index.IndexColumnName;
+import io.candice.parser.ast.fragment.ddl.index.IndexDefinition;
+import io.candice.parser.ast.fragment.ddl.index.IndexOption;
+import io.candice.parser.ast.stmt.ddl.DDLAlterTableStatement;
+import io.candice.parser.ast.stmt.ddl.DDLCreateIndexStatement;
+import io.candice.parser.ast.stmt.ddl.DDLCreateTableStatement;
+import io.candice.parser.ast.stmt.ddl.DDLDropIndexStatement;
+import io.candice.parser.ast.stmt.ddl.DDLDropTableStatement;
+import io.candice.parser.ast.stmt.ddl.DDLRenameTableStatement;
+import io.candice.parser.ast.stmt.ddl.DDLStatement;
+import io.candice.parser.ast.stmt.ddl.DDLTruncateStatement;
+import io.candice.parser.ast.stmt.dml.DMLSelectStatement;
+import io.candice.parser.ast.stmt.extension.ExtDDLCreatePolicy;
+import io.candice.parser.ast.stmt.extension.ExtDDLDropPolicy;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.util.Pair;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class MySQLDDLParser extends MySQLParser {
     protected MySQLExprParser exprParser;
 

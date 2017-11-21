@@ -1,5 +1,6 @@
 package io.candice.config.loader.xml;
 
+import io.candice.CandiceContext;
 import io.candice.config.model.ClusterConfig;
 import io.candice.config.model.QuarantineConfig;
 import io.candice.config.model.SystemConfig;
@@ -7,6 +8,8 @@ import io.candice.config.model.UserConfig;
 import io.candice.config.util.ConfigException;
 import io.candice.config.util.ConfigUtil;
 import io.candice.config.util.ParameterMapping;
+import io.candice.route.util.StringUtil;
+import io.candice.server.security.KeyPairGen;
 import io.candice.util.SplitUtil;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.log4j.Logger;
@@ -144,7 +147,7 @@ public class XMLServerLoader {
                 String pwd = (String) props.get("password");
                 if (needEncrypt) {
                     try {
-                        user.setPassword(KeyPairGen.decrypt(HeisenbergContext.getPubKey(), pwd));
+                        user.setPassword(KeyPairGen.decrypt(CandiceContext.getPubKey(), pwd));
 
                     } catch (Exception e1) {
                         logger.error("密钥解密失败", e1);

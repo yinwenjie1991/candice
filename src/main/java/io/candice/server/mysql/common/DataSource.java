@@ -24,9 +24,9 @@ public interface DataSource {
 
     public int getIdleCount();
 
-    public MySQLHeartbeat getHeartbeat();
-
-    public SQLRecorder getSqlRecorder() ;
+//    public MySQLHeartbeat getHeartbeat();
+//
+//    public SQLRecorder getSqlRecorder() ;
 
     public void startHeartbeat();
 

@@ -1,24 +1,17 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.primary.*;
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.VariableScope;
-import com.baidu.hsb.parser.recognizer.mysql.MySQLToken;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.ast.expression.primary.*;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.VariableScope;
+import io.candice.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public abstract class MySQLParser {
     public static final String DEFAULT_CHARSET = "utf-8";
     protected final MySQLLexer lexer;
@@ -216,7 +209,7 @@ public abstract class MySQLParser {
     }
 
     /**
-     * @param expectTextUppercase must be upper-case
+     * @param expectTextUppercases must be upper-case
      * @return index (start from 0) of expected text which is first matched. -1
      *         if none is matched.
      */

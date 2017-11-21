@@ -1,12 +1,5 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.util;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public final class ParseString {
 
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];

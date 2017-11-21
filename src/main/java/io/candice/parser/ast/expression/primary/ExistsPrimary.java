@@ -1,17 +1,8 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary;
 
-import com.baidu.hsb.parser.ast.expression.misc.QueryExpression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.misc.QueryExpression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * <code>'EXISTS' '(' subquery ')'</code>
- * 
- * @author xiongzhao@baidu.com
- */
 public class ExistsPrimary extends PrimaryExpression {
     private final QueryExpression subquery;
 
@@ -27,7 +18,6 @@ public class ExistsPrimary extends PrimaryExpression {
         return subquery;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

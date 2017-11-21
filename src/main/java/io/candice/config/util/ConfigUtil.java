@@ -1,5 +1,6 @@
 package io.candice.config.util;
 
+import io.candice.route.util.StringUtil;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

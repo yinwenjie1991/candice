@@ -1,3 +1,14 @@
+CREATE DATABASE `candice_test_shard_0`;
+CREATE DATABASE `candice_test_shard_1`;
+CREATE DATABASE `candice_test_shard_2`;
+CREATE DATABASE `candice_test_shard_3`;
+CREATE DATABASE `candice_test_shard_4`;
+CREATE DATABASE `candice_test_shard_5`;
+CREATE DATABASE `candice_test_shard_6`;
+CREATE DATABASE `candice_test_shard_7`;
+CREATE DATABASE `candice_test_shard_8`;
+CREATE DATABASE `candice_test_shard_9`;
+
 USE `candice_test_shard_0`;
 CREATE TABLE `TEST_SHARD_00` (
     `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'primary key',

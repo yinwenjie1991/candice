@@ -1,34 +1,27 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression;
-import com.baidu.hsb.parser.ast.expression.primary.function.arithmetic.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.bit.BitCount;
-import com.baidu.hsb.parser.ast.expression.primary.function.comparison.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.encryption.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.flowctrl.If;
-import com.baidu.hsb.parser.ast.expression.primary.function.flowctrl.Ifnull;
-import com.baidu.hsb.parser.ast.expression.primary.function.flowctrl.Nullif;
-import com.baidu.hsb.parser.ast.expression.primary.function.groupby.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.info.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.misc.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.xml.Extractvalue;
-import com.baidu.hsb.parser.ast.expression.primary.function.xml.Updatexml;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.function.FunctionExpression;
+import io.candice.parser.ast.expression.primary.function.arithmetic.*;
+import io.candice.parser.ast.expression.primary.function.bit.BitCount;
+import io.candice.parser.ast.expression.primary.function.comparison.*;
+import io.candice.parser.ast.expression.primary.function.datetime.*;
+import io.candice.parser.ast.expression.primary.function.encryption.*;
+import io.candice.parser.ast.expression.primary.function.flowctrl.If;
+import io.candice.parser.ast.expression.primary.function.flowctrl.Ifnull;
+import io.candice.parser.ast.expression.primary.function.flowctrl.Nullif;
+import io.candice.parser.ast.expression.primary.function.groupby.*;
+import io.candice.parser.ast.expression.primary.function.info.*;
+import io.candice.parser.ast.expression.primary.function.misc.*;
+import io.candice.parser.ast.expression.primary.function.string.*;
+import io.candice.parser.ast.expression.primary.function.xml.Extractvalue;
+import io.candice.parser.ast.expression.primary.function.xml.Updatexml;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class MySQLFunctionManager {
     public static enum FunctionParsingStrategy {
         /** not a function */

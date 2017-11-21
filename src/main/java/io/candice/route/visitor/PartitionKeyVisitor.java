@@ -1,62 +1,55 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.route.visitor;
 
-import com.baidu.hsb.config.model.config.TableConfig;
-import com.baidu.hsb.parser.ast.ASTNode;
-import com.baidu.hsb.parser.ast.expression.*;
-import com.baidu.hsb.parser.ast.expression.comparison.*;
-import com.baidu.hsb.parser.ast.expression.logical.LogicalAndExpression;
-import com.baidu.hsb.parser.ast.expression.logical.LogicalOrExpression;
-import com.baidu.hsb.parser.ast.expression.misc.InExpressionList;
-import com.baidu.hsb.parser.ast.expression.misc.QueryExpression;
-import com.baidu.hsb.parser.ast.expression.misc.UserExpression;
-import com.baidu.hsb.parser.ast.expression.primary.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression;
-import com.baidu.hsb.parser.ast.expression.primary.function.cast.Cast;
-import com.baidu.hsb.parser.ast.expression.primary.function.cast.Convert;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.Extract;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.GetFormat;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.Timestampadd;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.Timestampdiff;
-import com.baidu.hsb.parser.ast.expression.primary.function.groupby.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Char;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Trim;
-import com.baidu.hsb.parser.ast.expression.primary.literal.*;
-import com.baidu.hsb.parser.ast.expression.string.LikeExpression;
-import com.baidu.hsb.parser.ast.expression.type.CollateExpression;
-import com.baidu.hsb.parser.ast.fragment.GroupBy;
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.OrderBy;
-import com.baidu.hsb.parser.ast.fragment.SortOrder;
-import com.baidu.hsb.parser.ast.fragment.ddl.ColumnDefinition;
-import com.baidu.hsb.parser.ast.fragment.ddl.TableOptions;
-import com.baidu.hsb.parser.ast.fragment.ddl.datatype.DataType;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexColumnName;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexOption;
-import com.baidu.hsb.parser.ast.fragment.tableref.*;
-import com.baidu.hsb.parser.ast.stmt.dal.*;
-import com.baidu.hsb.parser.ast.stmt.ddl.*;
-import com.baidu.hsb.parser.ast.stmt.ddl.DDLAlterTableStatement.AlterSpecification;
-import com.baidu.hsb.parser.ast.stmt.dml.*;
-import com.baidu.hsb.parser.ast.stmt.extension.ExtDDLCreatePolicy;
-import com.baidu.hsb.parser.ast.stmt.extension.ExtDDLDropPolicy;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSReleaseStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSRollbackStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSSavepointStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSSetTransactionStatement;
-import com.baidu.hsb.parser.util.ExprEvalUtils;
-import com.baidu.hsb.parser.util.Pair;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
-import com.baidu.hsb.util.SmallSet;
+import io.candice.config.model.TableConfig;
+import io.candice.parser.ast.ASTNode;
+import io.candice.parser.ast.expression.*;
+import io.candice.parser.ast.expression.comparison.*;
+import io.candice.parser.ast.expression.logical.LogicalAndExpression;
+import io.candice.parser.ast.expression.logical.LogicalOrExpression;
+import io.candice.parser.ast.expression.misc.InExpressionList;
+import io.candice.parser.ast.expression.misc.QueryExpression;
+import io.candice.parser.ast.expression.misc.UserExpression;
+import io.candice.parser.ast.expression.primary.*;
+import io.candice.parser.ast.expression.primary.function.FunctionExpression;
+import io.candice.parser.ast.expression.primary.function.cast.Cast;
+import io.candice.parser.ast.expression.primary.function.cast.Convert;
+import io.candice.parser.ast.expression.primary.function.datetime.Extract;
+import io.candice.parser.ast.expression.primary.function.datetime.GetFormat;
+import io.candice.parser.ast.expression.primary.function.datetime.Timestampadd;
+import io.candice.parser.ast.expression.primary.function.datetime.Timestampdiff;
+import io.candice.parser.ast.expression.primary.function.groupby.*;
+import io.candice.parser.ast.expression.primary.function.string.Char;
+import io.candice.parser.ast.expression.primary.function.string.Trim;
+import io.candice.parser.ast.expression.primary.literal.*;
+import io.candice.parser.ast.expression.string.LikeExpression;
+import io.candice.parser.ast.expression.type.CollateExpression;
+import io.candice.parser.ast.fragment.GroupBy;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.OrderBy;
+import io.candice.parser.ast.fragment.SortOrder;
+import io.candice.parser.ast.fragment.ddl.ColumnDefinition;
+import io.candice.parser.ast.fragment.ddl.TableOptions;
+import io.candice.parser.ast.fragment.ddl.datatype.DataType;
+import io.candice.parser.ast.fragment.ddl.index.IndexColumnName;
+import io.candice.parser.ast.fragment.ddl.index.IndexOption;
+import io.candice.parser.ast.fragment.tableref.*;
+import io.candice.parser.ast.stmt.dal.*;
+import io.candice.parser.ast.stmt.ddl.*;
+import io.candice.parser.ast.stmt.ddl.DDLAlterTableStatement.AlterSpecification;
+import io.candice.parser.ast.stmt.dml.*;
+import io.candice.parser.ast.stmt.extension.ExtDDLCreatePolicy;
+import io.candice.parser.ast.stmt.extension.ExtDDLDropPolicy;
+import io.candice.parser.ast.stmt.mts.MTSReleaseStatement;
+import io.candice.parser.ast.stmt.mts.MTSRollbackStatement;
+import io.candice.parser.ast.stmt.mts.MTSSavepointStatement;
+import io.candice.parser.ast.stmt.mts.MTSSetTransactionStatement;
+import io.candice.parser.util.ExprEvalUtils;
+import io.candice.parser.util.Pair;
+import io.candice.parser.visitor.SQLASTVisitor;
+import io.candice.util.SmallSet;
 
 import java.util.*;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public final class PartitionKeyVisitor implements SQLASTVisitor {
 
     private static final Set<Class<? extends Expression>> VERDICT_PASS_THROUGH_WHERE     = new HashSet<Class<? extends Expression>>(

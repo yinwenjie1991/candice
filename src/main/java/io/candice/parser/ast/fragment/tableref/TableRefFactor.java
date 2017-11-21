@@ -1,19 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.tableref;
 
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class TableRefFactor extends AliasableTableReference {
     /** e.g. <code>"`db2`.`tb1`"</code> is possible */
     private final Identifier table;
@@ -43,22 +36,18 @@ public class TableRefFactor extends AliasableTableReference {
         return hintList;
     }
 
-    @Override
     public Object removeLastConditionElement() {
         return null;
     }
 
-    @Override
     public boolean isSingleTable() {
         return true;
     }
 
-    @Override
     public int getPrecedence() {
         return TableReference.PRECEDENCE_FACTOR;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

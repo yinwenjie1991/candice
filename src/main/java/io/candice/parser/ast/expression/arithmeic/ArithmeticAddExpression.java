@@ -15,7 +15,6 @@ public class ArithmeticAddExpression extends ArithmeticBinaryOperatorExpression 
         return "+";
     }
 
-    @Override
     public Number calculate(Integer integer1, Integer integer2) {
         if (integer1 == null || integer2 == null)
             return null;
@@ -35,7 +34,6 @@ public class ArithmeticAddExpression extends ArithmeticBinaryOperatorExpression 
         return new Integer(rst);
     }
 
-    @Override
     public Number calculate(Long long1, Long long2) {
         if (long1 == null || long2 == null)
             return null;
@@ -57,21 +55,18 @@ public class ArithmeticAddExpression extends ArithmeticBinaryOperatorExpression 
         return new Long(rst);
     }
 
-    @Override
     public BigInteger calculate(BigInteger bigint1, BigInteger bigint2) {
         if (bigint1 == null || bigint2 == null)
             return null;
         return bigint1.add(bigint2);
     }
 
-    @Override
     public BigDecimal calculate(BigDecimal bigDecimal1, BigDecimal bigDecimal2) {
         if (bigDecimal1 == null || bigDecimal2 == null)
             return null;
         return bigDecimal1.add(bigDecimal2);
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

@@ -1,18 +1,11 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.ddl.index;
 
-import com.baidu.hsb.parser.ast.ASTNode;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.ASTNode;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class IndexDefinition implements ASTNode {
     public static enum IndexType {
         BTREE,
@@ -49,7 +42,6 @@ public class IndexDefinition implements ASTNode {
         return options;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         // QS_TODO
 

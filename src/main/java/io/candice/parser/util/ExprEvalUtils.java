@@ -1,6 +1,6 @@
-
 package io.candice.parser.util;
 import io.candice.parser.ast.expression.primary.literal.LiteralBoolean;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

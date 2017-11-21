@@ -5,5 +5,5 @@ package io.candice.net.connection;
  * 作者: yinwenjie
  * 日期: 2017-10-17
  */
-public class ManagerConnection {
+public class ManagerConnection extends FrontendConnection {
 }

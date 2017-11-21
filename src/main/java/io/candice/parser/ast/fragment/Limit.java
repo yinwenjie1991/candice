@@ -1,6 +1,8 @@
 package io.candice.parser.ast.fragment;
 
 import io.candice.parser.ast.ASTNode;
+import io.candice.parser.ast.expression.primary.ParamMarker;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 public class Limit implements ASTNode {
     /** when it is null, to sql generated must ignore this number */
@@ -59,7 +61,6 @@ public class Limit implements ASTNode {
         return size == null ? sizeP : size;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

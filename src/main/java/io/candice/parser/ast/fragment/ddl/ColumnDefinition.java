@@ -1,20 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.ddl;
 
-import com.baidu.hsb.parser.ast.ASTNode;
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.literal.LiteralString;
-import com.baidu.hsb.parser.ast.fragment.ddl.datatype.DataType;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
 
-/**
- * NOT FULL AST
- * 
- * @author xiongzhao@baidu.com
- */
+import io.candice.parser.ast.ASTNode;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.literal.LiteralString;
+import io.candice.parser.ast.fragment.ddl.datatype.DataType;
+import io.candice.parser.visitor.SQLASTVisitor;
+
 public class ColumnDefinition implements ASTNode {
     public static enum SpecialIndex {
         PRIMARY,
@@ -84,7 +76,6 @@ public class ColumnDefinition implements ASTNode {
         return columnFormat;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

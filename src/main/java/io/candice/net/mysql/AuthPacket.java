@@ -1,7 +1,11 @@
 package io.candice.net.mysql;
 
 import io.candice.config.Capabilities;
+import io.candice.net.connection.BackendConnection;
 import io.candice.server.mysql.MySQLMessage;
+import io.candice.util.BufferUtil;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * 文件描述:
@@ -43,11 +47,44 @@ public class AuthPacket extends MySQLPacket {
         }
     }
 
+    @Override
+    public void write(ChannelHandlerContext context) {
+        ByteBuf buf = context.alloc().buffer();
+        BufferUtil.writeUB3(buf, calcPacketSize());
+        buf.writeByte(packetId);
+        BufferUtil.writeUB4(buf, clientFlags);
+        BufferUtil.writeUB4(buf, maxPacketSize);
+        buf.writeByte((byte) charsetIndex);
+        buf.writeBytes(FILLER);
+        if (user == null) {
+            buf.writeByte((byte) 0);
+        } else {
+            byte[] userData = user.getBytes();
+            BufferUtil.writeWithNull(buf, userData);
+        }
+        if (password == null) {
+            buf.writeByte((byte) 0);
+        } else {
+            BufferUtil.writeWithLength(buf, password);
+        }
+        if (database == null) {
+            buf.writeByte((byte) 0);
+        } else {
+            byte[] databaseData = database.getBytes();
+            BufferUtil.writeWithNull(buf, databaseData);
+        }
+        context.writeAndFlush(buf);
+    }
+
     public int calcPacketSize() {
-        return 0;
+        int size = 32;// 4+4+1+23;
+        size += (user == null) ? 1 : user.length() + 1;
+        size += (password == null) ? 1 : BufferUtil.getLength(password);
+        size += (database == null) ? 1 : database.length() + 1;
+        return size;
     }
 
     protected String getPacketInfo() {
-        return null;
+        return "MySQL Authentication Packet";
     }
 }

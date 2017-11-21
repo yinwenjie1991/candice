@@ -1,18 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.string;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.TernaryOperatorExpression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.TernaryOperatorExpression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * <code>higherPreExpr 'NOT'? 'LIKE' higherPreExpr ('ESCAPE' higherPreExpr)?</code>
- * 
- * @author xiongzhao@baidu.com
- */
 public class LikeExpression extends TernaryOperatorExpression {
     private final boolean not;
 
@@ -28,12 +19,10 @@ public class LikeExpression extends TernaryOperatorExpression {
         return not;
     }
 
-    @Override
     public int getPrecedence() {
         return PRECEDENCE_COMPARISION;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

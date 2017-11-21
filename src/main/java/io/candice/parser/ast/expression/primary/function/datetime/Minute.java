@@ -1,17 +1,10 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary.function.datetime;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.function.FunctionExpression;
 
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class Minute extends FunctionExpression {
     public Minute(List<Expression> arguments) {
         super("MINUTE", arguments);

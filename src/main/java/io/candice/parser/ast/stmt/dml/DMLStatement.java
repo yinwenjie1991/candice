@@ -1,19 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dml;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.stmt.SQLStatement;
-import com.baidu.hsb.parser.visitor.MySQLOutputASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.stmt.SQLStatement;
+import io.candice.parser.visitor.MySQLOutputASTVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public abstract class DMLStatement implements SQLStatement {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected static List ensureListType(List list) {

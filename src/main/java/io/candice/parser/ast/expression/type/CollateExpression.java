@@ -1,19 +1,14 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.type;
 
-import com.baidu.hsb.parser.ast.expression.AbstractExpression;
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.AbstractExpression;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.Map;
 
 /**
  * <code>higherExpr 'COLLATE' collateName</code>
- * 
- * @author xiongzhao@baidu.com
+ *
  */
 public class CollateExpression extends AbstractExpression {
     private final String collateName;
@@ -33,7 +28,6 @@ public class CollateExpression extends AbstractExpression {
         return string;
     }
 
-    @Override
     public int getPrecedence() {
         return PRECEDENCE_COLLATE;
     }
@@ -43,7 +37,6 @@ public class CollateExpression extends AbstractExpression {
         return string.evaluation(parameters);
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

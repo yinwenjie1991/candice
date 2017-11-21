@@ -1,12 +1,8 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.RowExpression;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.RowExpression;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
@@ -14,7 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
 
 /**
  * @author xiongzhao@baidu.com

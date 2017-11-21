@@ -30,7 +30,8 @@ public class MysqlMessageDecoder extends ByteToMessageDecoder{
             return;
         }
         in.resetReaderIndex();
-        byte[] bytes = in.readBytes(packetLength + packetHeaderSize).array();
+        byte[] bytes = new byte[packetLength + packetHeaderSize];
+        in.readBytes(bytes);
         in.discardReadBytes();
         out.add(bytes);
     }

@@ -1,19 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dml;
 
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.OrderBy;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.OrderBy;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class DMLSelectUnionStatement extends DMLQueryStatement {
     /** might be {@link LinkedList} */
     private final List<DMLSelectStatement> selectStmtList;
@@ -68,7 +61,6 @@ public class DMLSelectUnionStatement extends DMLQueryStatement {
         return limit;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

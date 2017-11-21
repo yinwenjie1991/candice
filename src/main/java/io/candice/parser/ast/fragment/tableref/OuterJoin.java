@@ -1,21 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.tableref;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * left or right join
- * 
- * @author xiongzhao@baidu.com
- */
 public class OuterJoin implements TableReference {
     private static List<String> ensureListType(List<String> list) {
         if (list == null) return null;
@@ -72,22 +63,18 @@ public class OuterJoin implements TableReference {
         return using;
     }
 
-    @Override
     public Object removeLastConditionElement() {
         return null;
     }
 
-    @Override
     public boolean isSingleTable() {
         return false;
     }
 
-    @Override
     public int getPrecedence() {
         return TableReference.PRECEDENCE_JOIN;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

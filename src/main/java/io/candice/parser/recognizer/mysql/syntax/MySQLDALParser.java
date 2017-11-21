@@ -1,32 +1,91 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.expression.primary.SysVarPrimary;
-import com.baidu.hsb.parser.ast.expression.primary.UsrDefVarPrimary;
-import com.baidu.hsb.parser.ast.expression.primary.VariableExpression;
-import com.baidu.hsb.parser.ast.expression.primary.literal.LiteralString;
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.VariableScope;
-import com.baidu.hsb.parser.ast.stmt.SQLStatement;
-import com.baidu.hsb.parser.ast.stmt.dal.*;
-import com.baidu.hsb.parser.ast.stmt.ddl.DescTableStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSSetTransactionStatement;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
-import com.baidu.hsb.parser.util.Pair;
+import static io.candice.parser.recognizer.mysql.MySQLToken.IDENTIFIER;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_CHARACTER;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_COLLATE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_DEFAULT;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_DESC;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_DESCRIBE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_FOR;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_FROM;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_IN;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_LIKE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_LIMIT;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_OPTION;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_READ;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_SET;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_SHOW;
+import static io.candice.parser.recognizer.mysql.MySQLToken.KW_WHERE;
+import static io.candice.parser.recognizer.mysql.MySQLToken.OP_ASSIGN;
+import static io.candice.parser.recognizer.mysql.MySQLToken.OP_ASTERISK;
+import static io.candice.parser.recognizer.mysql.MySQLToken.OP_EQUALS;
+import static io.candice.parser.recognizer.mysql.MySQLToken.PUNC_COMMA;
+import static io.candice.parser.recognizer.mysql.MySQLToken.PUNC_LEFT_PAREN;
+import static io.candice.parser.recognizer.mysql.MySQLToken.PUNC_RIGHT_PAREN;
 
 import java.sql.SQLSyntaxErrorException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.expression.primary.SysVarPrimary;
+import io.candice.parser.ast.expression.primary.UsrDefVarPrimary;
+import io.candice.parser.ast.expression.primary.VariableExpression;
+import io.candice.parser.ast.expression.primary.literal.LiteralString;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.VariableScope;
+import io.candice.parser.ast.stmt.SQLStatement;
+import io.candice.parser.ast.stmt.dal.DALSetCharacterSetStatement;
+import io.candice.parser.ast.stmt.dal.DALSetNamesStatement;
+import io.candice.parser.ast.stmt.dal.DALSetStatement;
+import io.candice.parser.ast.stmt.dal.DALShowStatement;
+import io.candice.parser.ast.stmt.dal.ShowAuthors;
+import io.candice.parser.ast.stmt.dal.ShowBinLogEvent;
+import io.candice.parser.ast.stmt.dal.ShowBinaryLog;
+import io.candice.parser.ast.stmt.dal.ShowCharaterSet;
+import io.candice.parser.ast.stmt.dal.ShowCollation;
+import io.candice.parser.ast.stmt.dal.ShowColumns;
+import io.candice.parser.ast.stmt.dal.ShowContributors;
+import io.candice.parser.ast.stmt.dal.ShowCreate;
+import io.candice.parser.ast.stmt.dal.ShowDatabases;
+import io.candice.parser.ast.stmt.dal.ShowEngine;
+import io.candice.parser.ast.stmt.dal.ShowEngines;
+import io.candice.parser.ast.stmt.dal.ShowErrors;
+import io.candice.parser.ast.stmt.dal.ShowEvents;
+import io.candice.parser.ast.stmt.dal.ShowFunctionCode;
+import io.candice.parser.ast.stmt.dal.ShowFunctionStatus;
+import io.candice.parser.ast.stmt.dal.ShowGrants;
+import io.candice.parser.ast.stmt.dal.ShowIndex;
+import io.candice.parser.ast.stmt.dal.ShowMasterStatus;
+import io.candice.parser.ast.stmt.dal.ShowOpenTables;
+import io.candice.parser.ast.stmt.dal.ShowPlugins;
+import io.candice.parser.ast.stmt.dal.ShowPrivileges;
+import io.candice.parser.ast.stmt.dal.ShowProcedureCode;
+import io.candice.parser.ast.stmt.dal.ShowProcedureStatus;
+import io.candice.parser.ast.stmt.dal.ShowProcesslist;
+import io.candice.parser.ast.stmt.dal.ShowProfile;
+import io.candice.parser.ast.stmt.dal.ShowProfiles;
+import io.candice.parser.ast.stmt.dal.ShowSlaveHosts;
+import io.candice.parser.ast.stmt.dal.ShowSlaveStatus;
+import io.candice.parser.ast.stmt.dal.ShowStatus;
+import io.candice.parser.ast.stmt.dal.ShowTableStatus;
+import io.candice.parser.ast.stmt.dal.ShowTables;
+import io.candice.parser.ast.stmt.dal.ShowTriggers;
+import io.candice.parser.ast.stmt.dal.ShowVariables;
+import io.candice.parser.ast.stmt.dal.ShowWarnings;
+import io.candice.parser.ast.stmt.ddl.DescTableStatement;
+import io.candice.parser.ast.stmt.mts.MTSSetTransactionStatement;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.util.Pair;
 
-/**
- * @author xiongzhao@baidu.com
- */
+
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
+
 public class MySQLDALParser extends MySQLParser {
     protected MySQLExprParser exprParser;
 

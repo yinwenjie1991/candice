@@ -1,25 +1,20 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.ddl;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.fragment.ddl.ColumnDefinition;
-import com.baidu.hsb.parser.ast.fragment.ddl.TableOptions;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexDefinition;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLSelectStatement;
-import com.baidu.hsb.parser.util.Pair;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.fragment.ddl.ColumnDefinition;
+import io.candice.parser.ast.fragment.ddl.TableOptions;
+import io.candice.parser.ast.fragment.ddl.index.IndexDefinition;
+import io.candice.parser.ast.stmt.dml.DMLSelectStatement;
+import io.candice.parser.util.Pair;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * NOT FULL AST: foreign key, ... not supported
- * 
- * @author xiongzhao@baidu.com
+ *
  */
 public class DDLCreateTableStatement implements DDLStatement {
     public static enum SelectOption {
@@ -147,7 +142,6 @@ public class DDLCreateTableStatement implements DDLStatement {
         return checks;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

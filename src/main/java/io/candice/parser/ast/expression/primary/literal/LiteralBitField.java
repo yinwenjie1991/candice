@@ -1,14 +1,8 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
+
 package io.candice.parser.ast.expression.primary.literal;
 
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class LiteralBitField extends Literal {
     private final String text;
     private final String introducer;
@@ -32,7 +26,6 @@ public class LiteralBitField extends Literal {
         return introducer;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

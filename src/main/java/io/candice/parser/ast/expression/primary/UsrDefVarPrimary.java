@@ -1,14 +1,7 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary;
 
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.visitor.SQLASTVisitor;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class UsrDefVarPrimary extends VariableExpression {
     /** include starting '@', e.g. "@'mary''s'" */
     private final String varText;
@@ -21,7 +14,6 @@ public class UsrDefVarPrimary extends VariableExpression {
         return varText;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

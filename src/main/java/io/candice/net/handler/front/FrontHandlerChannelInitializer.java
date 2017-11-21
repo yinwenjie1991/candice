@@ -15,14 +15,17 @@ import io.netty.handler.timeout.IdleStateHandler;
  */
 public class FrontHandlerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-    private f
+    private FrontendConnectionFactory factory;
 
+    public FrontHandlerChannelInitializer(FrontendConnectionFactory factory) {
+        this.factory = factory;
+    }
 
     private int idleTimeout = 10 * 60; //10min
 
     protected void initChannel(SocketChannel ch) throws Exception {
         //1. 超时检查的handler
-        FrontendConnection frontendConnection = FrontendConnectionFactory.make();
+        FrontendConnection frontendConnection = factory.make();
         ch.pipeline().addLast( FrontHandlerNameEnum.IDLE.getCode()
                 , new IdleStateHandler(0, 0, idleTimeout));
         ch.pipeline().addLast( FrontHandlerNameEnum.GROUP.getCode(), new FrontendGroupHandler(frontendConnection));

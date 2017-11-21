@@ -1,17 +1,10 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.lexer;
 
-import com.baidu.hsb.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.recognizer.mysql.MySQLToken;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author xiongzhao@baidu.com
- */
 class MySQLKeywords {
     public static final MySQLKeywords DEFAULT_KEYWORDS = new MySQLKeywords();
 

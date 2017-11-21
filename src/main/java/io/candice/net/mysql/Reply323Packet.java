@@ -1,6 +1,10 @@
 package io.candice.net.mysql;
 
+import io.candice.util.BufferUtil;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+
+import java.nio.ByteBuffer;
 
 /**
  * 文件描述:
@@ -13,7 +17,15 @@ public class Reply323Packet extends MySQLPacket {
 
     @Override
     public void write(ChannelHandlerContext context) {
-
+        ByteBuf buf = context.alloc().buffer();
+        BufferUtil.writeUB3(buf, calcPacketSize());
+        buf.writeByte(packetId);
+        if (seed == null) {
+            buf.writeByte((byte) 0);
+        } else {
+            BufferUtil.writeWithNull(buf, seed);
+        }
+        context.writeAndFlush(buf);
     }
 
     @Override

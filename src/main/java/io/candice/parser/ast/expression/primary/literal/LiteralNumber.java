@@ -1,18 +1,9 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary.literal;
 
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.Map;
 
-/**
- * literal date is also possible
- * 
- * @author xiongzhao@baidu.com
- */
 public class LiteralNumber extends Literal {
     private final Number number;
 
@@ -27,7 +18,6 @@ public class LiteralNumber extends Literal {
         return number;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

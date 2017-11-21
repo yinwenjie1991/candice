@@ -1,21 +1,17 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.recognizer.mysql.syntax;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.misc.QueryExpression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.fragment.GroupBy;
-import com.baidu.hsb.parser.ast.fragment.OrderBy;
-import com.baidu.hsb.parser.ast.fragment.SortOrder;
-import com.baidu.hsb.parser.ast.fragment.tableref.*;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLQueryStatement;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLSelectStatement;
-import com.baidu.hsb.parser.ast.stmt.dml.DMLSelectUnionStatement;
-import com.baidu.hsb.parser.recognizer.mysql.MySQLToken;
-import com.baidu.hsb.parser.recognizer.mysql.lexer.MySQLLexer;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.misc.QueryExpression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.fragment.GroupBy;
+import io.candice.parser.ast.fragment.OrderBy;
+import io.candice.parser.ast.fragment.SortOrder;
+import io.candice.parser.ast.fragment.tableref.*;
+import io.candice.parser.ast.stmt.dml.DMLQueryStatement;
+import io.candice.parser.ast.stmt.dml.DMLSelectStatement;
+import io.candice.parser.ast.stmt.dml.DMLSelectUnionStatement;
+import io.candice.parser.recognizer.mysql.MySQLToken;
+import io.candice.parser.recognizer.mysql.lexer.MySQLLexer;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
@@ -23,11 +19,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.baidu.hsb.parser.recognizer.mysql.MySQLToken.*;
+import static io.candice.parser.recognizer.mysql.MySQLToken.*;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public abstract class MySQLDMLParser extends MySQLParser {
     protected MySQLExprParser exprParser;
 

@@ -5,9 +5,10 @@ import io.candice.net.connection.ServerConnection;
 import io.candice.net.mysql.EOFPacket;
 import io.candice.net.mysql.FieldPacket;
 import io.candice.net.mysql.ResultSetHeaderPacket;
+import io.candice.net.mysql.RowDataPacket;
 import io.candice.util.PacketUtil;
-
-import java.nio.ByteBuffer;
+import io.candice.util.StringUtil;
+import io.netty.buffer.ByteBuf;
 
 /**
  * 文件描述:
@@ -30,21 +31,21 @@ public class SelectDatabase {
     }
 
     public static void response(ServerConnection c) {
-        ByteBuffer buffer = c.allocate();
-        buffer = header.write(buffer, c);
+        ByteBuf buf = c.getChannelHandlerContext().alloc().buffer();
+        buf = header.writeBuf(buf);
         for (FieldPacket field : fields) {
-            buffer = field.write(buffer, c);
+            buf = field.writeBuf(buf);
         }
-        buffer = eof.write(buffer, c);
+        buf = eof.writeBuf(buf);
         byte packetId = eof.packetId;
         RowDataPacket row = new RowDataPacket(FIELD_COUNT);
         row.add(StringUtil.encode(c.getSchema(), c.getCharset()));
         row.packetId = ++packetId;
-        buffer = row.write(buffer, c);
+        buf = row.writeBuf(buf);
         EOFPacket lastEof = new EOFPacket();
         lastEof.packetId = ++packetId;
-        buffer = lastEof.write(buffer, c);
-        c.write(buffer);
+        buf = lastEof.writeBuf(buf);
+        c.getChannelHandlerContext().writeAndFlush(buf);
     }
 
 }

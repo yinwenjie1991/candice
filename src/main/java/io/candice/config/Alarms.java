@@ -7,7 +7,7 @@ package io.candice.config;
  */
 public interface Alarms {
     /** 默认报警关键词 **/
-    String DEFAULT = "#!HSB#";
+    String DEFAULT = "#!Candice#";
 
     /** 集群无有效的节点可提供服务 **/
     String CLUSTER_EMPTY = "#!CLUSTER_EMPTY#";

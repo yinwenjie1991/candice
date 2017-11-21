@@ -1,18 +1,11 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary.literal;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class IntervalPrimary extends Literal {
     public static enum Unit {
         MICROSECOND,
@@ -80,7 +73,6 @@ public class IntervalPrimary extends Literal {
         return quantity;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

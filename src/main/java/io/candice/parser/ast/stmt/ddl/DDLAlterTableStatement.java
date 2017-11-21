@@ -1,25 +1,20 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.ddl;
 
-import com.baidu.hsb.parser.ast.ASTNode;
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.fragment.ddl.ColumnDefinition;
-import com.baidu.hsb.parser.ast.fragment.ddl.TableOptions;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexDefinition;
-import com.baidu.hsb.parser.util.Pair;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.ASTNode;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.fragment.ddl.ColumnDefinition;
+import io.candice.parser.ast.fragment.ddl.TableOptions;
+import io.candice.parser.ast.fragment.ddl.index.IndexDefinition;
+import io.candice.parser.util.Pair;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * NOT FULL AST: partition options, foreign key, ORDER BY not supported
- * 
- * @author xiongzhao@baidu.com
+ *
  */
 public class DDLAlterTableStatement implements DDLStatement {
     public static interface AlterSpecification extends ASTNode {
@@ -47,7 +42,6 @@ public class DDLAlterTableStatement implements DDLStatement {
         /**
          * @param columnName
          * @param columnDefine
-         * @param afterColumn null means fisrt
          */
         public AddColumn(Identifier columnName, ColumnDefinition columnDefine) {
             this.columnName = columnName;
@@ -72,7 +66,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return afterColumn;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -95,7 +88,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return columns;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -108,7 +100,7 @@ public class DDLAlterTableStatement implements DDLStatement {
 
         /**
          * @param indexName
-         * @param indexType
+         * @param indexDef
          */
         public AddIndex(Identifier indexName, IndexDefinition indexDef) {
             this.indexName = indexName;
@@ -141,7 +133,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return indexDef;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -165,7 +156,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return indexDef;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
 
@@ -190,7 +180,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return indexDef;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -214,7 +203,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return indexDef;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -259,7 +247,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return dropDefault;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -312,7 +299,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return afterColumn;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -358,7 +344,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return afterColumn;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -376,7 +361,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return colName;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -384,7 +368,7 @@ public class DDLAlterTableStatement implements DDLStatement {
 
     //    | DROP PRIMARY KEY
     public static class DropPrimaryKey implements AlterSpecification {
-        @Override
+
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -402,7 +386,6 @@ public class DDLAlterTableStatement implements DDLStatement {
             return indexName;
         }
 
-        @Override
         public void accept(SQLASTVisitor visitor) {
             visitor.visit(this);
         }
@@ -522,7 +505,6 @@ public class DDLAlterTableStatement implements DDLStatement {
         return table;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

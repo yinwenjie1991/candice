@@ -1,20 +1,13 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.fragment.ddl;
 
-import com.baidu.hsb.parser.ast.ASTNode;
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.Identifier;
-import com.baidu.hsb.parser.ast.expression.primary.literal.LiteralString;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.ASTNode;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.Identifier;
+import io.candice.parser.ast.expression.primary.literal.LiteralString;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class TableOptions implements ASTNode {
     public static enum InsertMethod {
         NO,
@@ -232,7 +225,6 @@ public class TableOptions implements ASTNode {
         this.union = union;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

@@ -1,6 +1,9 @@
 package io.candice.net.mysql;
 
+import io.candice.net.connection.BackendConnection;
+import io.candice.net.connection.FrontendConnection;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.nio.ByteBuffer;
 
@@ -164,17 +167,15 @@ public abstract class MySQLPacket {
     public int packetLength;
     public byte packetId;
 
-    /**
-     * 把数据包写到buffer中，如果buffer满了就把buffer通过前端连接写出。
-     */
-    public ByteBuf write(ByteBuf buffer, FrontendConnection c) {
+    public ByteBuf writeBuf(ByteBuf buffer) {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * 把数据包通过后端连接写出，一般使用buffer机制来提高写的吞吐量。
+     * 对 socket 写数据
+     * @param context netty context
      */
-    public void write(BackendConnection c) {
+    public void write(ChannelHandlerContext context) {
         throw new UnsupportedOperationException();
     }
 

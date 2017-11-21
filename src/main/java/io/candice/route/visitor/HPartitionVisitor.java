@@ -1,61 +1,52 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.route.visitor;
 
-import com.baidu.hsb.parser.ast.expression.BinaryOperatorExpression;
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.PolyadicOperatorExpression;
-import com.baidu.hsb.parser.ast.expression.UnaryOperatorExpression;
-import com.baidu.hsb.parser.ast.expression.comparison.*;
-import com.baidu.hsb.parser.ast.expression.logical.LogicalAndExpression;
-import com.baidu.hsb.parser.ast.expression.logical.LogicalOrExpression;
-import com.baidu.hsb.parser.ast.expression.misc.InExpressionList;
-import com.baidu.hsb.parser.ast.expression.misc.UserExpression;
-import com.baidu.hsb.parser.ast.expression.primary.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression;
-import com.baidu.hsb.parser.ast.expression.primary.function.cast.Cast;
-import com.baidu.hsb.parser.ast.expression.primary.function.cast.Convert;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.Extract;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.GetFormat;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.Timestampadd;
-import com.baidu.hsb.parser.ast.expression.primary.function.datetime.Timestampdiff;
-import com.baidu.hsb.parser.ast.expression.primary.function.groupby.*;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Char;
-import com.baidu.hsb.parser.ast.expression.primary.function.string.Trim;
-import com.baidu.hsb.parser.ast.expression.primary.literal.*;
-import com.baidu.hsb.parser.ast.expression.string.LikeExpression;
-import com.baidu.hsb.parser.ast.expression.type.CollateExpression;
-import com.baidu.hsb.parser.ast.fragment.GroupBy;
-import com.baidu.hsb.parser.ast.fragment.Limit;
-import com.baidu.hsb.parser.ast.fragment.OrderBy;
-import com.baidu.hsb.parser.ast.fragment.ddl.ColumnDefinition;
-import com.baidu.hsb.parser.ast.fragment.ddl.TableOptions;
-import com.baidu.hsb.parser.ast.fragment.ddl.datatype.DataType;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexColumnName;
-import com.baidu.hsb.parser.ast.fragment.ddl.index.IndexOption;
-import com.baidu.hsb.parser.ast.fragment.tableref.*;
-import com.baidu.hsb.parser.ast.stmt.dal.*;
-import com.baidu.hsb.parser.ast.stmt.ddl.*;
-import com.baidu.hsb.parser.ast.stmt.ddl.DDLAlterTableStatement.AlterSpecification;
-import com.baidu.hsb.parser.ast.stmt.dml.*;
-import com.baidu.hsb.parser.ast.stmt.extension.ExtDDLCreatePolicy;
-import com.baidu.hsb.parser.ast.stmt.extension.ExtDDLDropPolicy;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSReleaseStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSRollbackStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSSavepointStatement;
-import com.baidu.hsb.parser.ast.stmt.mts.MTSSetTransactionStatement;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.BinaryOperatorExpression;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.PolyadicOperatorExpression;
+import io.candice.parser.ast.expression.UnaryOperatorExpression;
+import io.candice.parser.ast.expression.comparison.*;
+import io.candice.parser.ast.expression.logical.LogicalAndExpression;
+import io.candice.parser.ast.expression.logical.LogicalOrExpression;
+import io.candice.parser.ast.expression.misc.InExpressionList;
+import io.candice.parser.ast.expression.misc.UserExpression;
+import io.candice.parser.ast.expression.primary.*;
+import io.candice.parser.ast.expression.primary.function.FunctionExpression;
+import io.candice.parser.ast.expression.primary.function.cast.Cast;
+import io.candice.parser.ast.expression.primary.function.cast.Convert;
+import io.candice.parser.ast.expression.primary.function.datetime.Extract;
+import io.candice.parser.ast.expression.primary.function.datetime.GetFormat;
+import io.candice.parser.ast.expression.primary.function.datetime.Timestampadd;
+import io.candice.parser.ast.expression.primary.function.datetime.Timestampdiff;
+import io.candice.parser.ast.expression.primary.function.groupby.*;
+import io.candice.parser.ast.expression.primary.function.string.Char;
+import io.candice.parser.ast.expression.primary.function.string.Trim;
+import io.candice.parser.ast.expression.primary.literal.*;
+import io.candice.parser.ast.expression.string.LikeExpression;
+import io.candice.parser.ast.expression.type.CollateExpression;
+import io.candice.parser.ast.fragment.GroupBy;
+import io.candice.parser.ast.fragment.Limit;
+import io.candice.parser.ast.fragment.OrderBy;
+import io.candice.parser.ast.fragment.ddl.ColumnDefinition;
+import io.candice.parser.ast.fragment.ddl.TableOptions;
+import io.candice.parser.ast.fragment.ddl.datatype.DataType;
+import io.candice.parser.ast.fragment.ddl.index.IndexColumnName;
+import io.candice.parser.ast.fragment.ddl.index.IndexOption;
+import io.candice.parser.ast.fragment.tableref.*;
+import io.candice.parser.ast.stmt.dal.*;
+import io.candice.parser.ast.stmt.ddl.*;
+import io.candice.parser.ast.stmt.ddl.DDLAlterTableStatement.AlterSpecification;
+import io.candice.parser.ast.stmt.dml.*;
+import io.candice.parser.ast.stmt.extension.ExtDDLCreatePolicy;
+import io.candice.parser.ast.stmt.extension.ExtDDLDropPolicy;
+import io.candice.parser.ast.stmt.mts.MTSReleaseStatement;
+import io.candice.parser.ast.stmt.mts.MTSRollbackStatement;
+import io.candice.parser.ast.stmt.mts.MTSSavepointStatement;
+import io.candice.parser.ast.stmt.mts.MTSSetTransactionStatement;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * 
- * @author xiongzhao@baidu.com
- * @version $Id: HPartitionVisitor.java, v 0.1 2013年12月23日 下午2:08:18 HI:brucest0078 Exp $
- */
 public class HPartitionVisitor implements SQLASTVisitor {
 
     private static final Set<Class<? extends Expression>> VERDICT_PASS_THROUGH_WHERE     = new HashSet<Class<? extends Expression>>(
@@ -82,854 +73,854 @@ public class HPartitionVisitor implements SQLASTVisitor {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.comparison.BetweenAndExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.comparison.BetweenAndExpression)
      */
     @Override
     public void visit(BetweenAndExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.comparison.ComparisionIsExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.comparison.ComparisionIsExpression)
      */
     @Override
     public void visit(ComparisionIsExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.misc.InExpressionList)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.misc.InExpressionList)
      */
     @Override
     public void visit(InExpressionList node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.string.LikeExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.string.LikeExpression)
      */
     @Override
     public void visit(LikeExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.type.CollateExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.type.CollateExpression)
      */
     @Override
     public void visit(CollateExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.misc.UserExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.misc.UserExpression)
      */
     @Override
     public void visit(UserExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.UnaryOperatorExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.UnaryOperatorExpression)
      */
     @Override
     public void visit(UnaryOperatorExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.BinaryOperatorExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.BinaryOperatorExpression)
      */
     @Override
     public void visit(BinaryOperatorExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.PolyadicOperatorExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.PolyadicOperatorExpression)
      */
     @Override
     public void visit(PolyadicOperatorExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.logical.LogicalAndExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.logical.LogicalAndExpression)
      */
     @Override
     public void visit(LogicalAndExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.logical.LogicalOrExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.logical.LogicalOrExpression)
      */
     @Override
     public void visit(LogicalOrExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.comparison.ComparisionEqualsExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.comparison.ComparisionEqualsExpression)
      */
     @Override
     public void visit(ComparisionEqualsExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.comparison.ComparisionNullSafeEqualsExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.comparison.ComparisionNullSafeEqualsExpression)
      */
     @Override
     public void visit(ComparisionNullSafeEqualsExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.comparison.InExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.comparison.InExpression)
      */
     @Override
     public void visit(InExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.FunctionExpression)
      */
     @Override
     public void visit(FunctionExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.string.Char)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.string.Char)
      */
     @Override
     public void visit(Char node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.cast.Convert)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.cast.Convert)
      */
     @Override
     public void visit(Convert node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.string.Trim)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.string.Trim)
      */
     @Override
     public void visit(Trim node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.cast.Cast)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.cast.Cast)
      */
     @Override
     public void visit(Cast node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.groupby.Avg)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.groupby.Avg)
      */
     @Override
     public void visit(Avg node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.groupby.Max)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.groupby.Max)
      */
     @Override
     public void visit(Max node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.groupby.Min)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.groupby.Min)
      */
     @Override
     public void visit(Min node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.groupby.Sum)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.groupby.Sum)
      */
     @Override
     public void visit(Sum node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.groupby.Count)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.groupby.Count)
      */
     @Override
     public void visit(Count node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.groupby.GroupConcat)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.groupby.GroupConcat)
      */
     @Override
     public void visit(GroupConcat node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.datetime.Extract)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.datetime.Extract)
      */
     @Override
     public void visit(Extract node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.datetime.Timestampdiff)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.datetime.Timestampdiff)
      */
     @Override
     public void visit(Timestampdiff node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.datetime.Timestampadd)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.datetime.Timestampadd)
      */
     @Override
     public void visit(Timestampadd node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.function.datetime.GetFormat)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.function.datetime.GetFormat)
      */
     @Override
     public void visit(GetFormat node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.IntervalPrimary)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.IntervalPrimary)
      */
     @Override
     public void visit(IntervalPrimary node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.LiteralBitField)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.LiteralBitField)
      */
     @Override
     public void visit(LiteralBitField node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.LiteralBoolean)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.LiteralBoolean)
      */
     @Override
     public void visit(LiteralBoolean node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.LiteralHexadecimal)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.LiteralHexadecimal)
      */
     @Override
     public void visit(LiteralHexadecimal node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.LiteralNull)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.LiteralNull)
      */
     @Override
     public void visit(LiteralNull node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.LiteralNumber)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.LiteralNumber)
      */
     @Override
     public void visit(LiteralNumber node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.literal.LiteralString)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.literal.LiteralString)
      */
     @Override
     public void visit(LiteralString node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.CaseWhenOperatorExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.CaseWhenOperatorExpression)
      */
     @Override
     public void visit(CaseWhenOperatorExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.DefaultValue)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.DefaultValue)
      */
     @Override
     public void visit(DefaultValue node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.ExistsPrimary)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.ExistsPrimary)
      */
     @Override
     public void visit(ExistsPrimary node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.PlaceHolder)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.PlaceHolder)
      */
     @Override
     public void visit(PlaceHolder node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.Identifier)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.Identifier)
      */
     @Override
     public void visit(Identifier node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.MatchExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.MatchExpression)
      */
     @Override
     public void visit(MatchExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.ParamMarker)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.ParamMarker)
      */
     @Override
     public void visit(ParamMarker node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.RowExpression)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.RowExpression)
      */
     @Override
     public void visit(RowExpression node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.SysVarPrimary)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.SysVarPrimary)
      */
     @Override
     public void visit(SysVarPrimary node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.expression.primary.UsrDefVarPrimary)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.expression.primary.UsrDefVarPrimary)
      */
     @Override
     public void visit(UsrDefVarPrimary node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.IndexHint)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.IndexHint)
      */
     @Override
     public void visit(IndexHint node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.InnerJoin)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.InnerJoin)
      */
     @Override
     public void visit(InnerJoin node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.NaturalJoin)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.NaturalJoin)
      */
     @Override
     public void visit(NaturalJoin node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.OuterJoin)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.OuterJoin)
      */
     @Override
     public void visit(OuterJoin node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.StraightJoin)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.StraightJoin)
      */
     @Override
     public void visit(StraightJoin node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.SubqueryFactor)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.SubqueryFactor)
      */
     @Override
     public void visit(SubqueryFactor node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.TableReferences)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.TableReferences)
      */
     @Override
     public void visit(TableReferences node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.TableRefFactor)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.TableRefFactor)
      */
     @Override
     public void visit(TableRefFactor node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.tableref.Dual)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.tableref.Dual)
      */
     @Override
     public void visit(Dual dual) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.GroupBy)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.GroupBy)
      */
     @Override
     public void visit(GroupBy node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.Limit)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.Limit)
      */
     @Override
     public void visit(Limit node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.OrderBy)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.OrderBy)
      */
     @Override
     public void visit(OrderBy node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.ddl.ColumnDefinition)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.ddl.ColumnDefinition)
      */
     @Override
     public void visit(ColumnDefinition node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.ddl.index.IndexOption)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.ddl.index.IndexOption)
      */
     @Override
     public void visit(IndexOption node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.ddl.index.IndexColumnName)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.ddl.index.IndexColumnName)
      */
     @Override
     public void visit(IndexColumnName node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.ddl.TableOptions)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.ddl.TableOptions)
      */
     @Override
     public void visit(TableOptions node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLAlterTableStatement.AlterSpecification)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLAlterTableStatement.AlterSpecification)
      */
     @Override
     public void visit(AlterSpecification node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.fragment.ddl.datatype.DataType)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.fragment.ddl.datatype.DataType)
      */
     @Override
     public void visit(DataType node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowAuthors)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowAuthors)
      */
     @Override
     public void visit(ShowAuthors node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowBinaryLog)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowBinaryLog)
      */
     @Override
     public void visit(ShowBinaryLog node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowBinLogEvent)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowBinLogEvent)
      */
     @Override
     public void visit(ShowBinLogEvent node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowCharaterSet)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowCharaterSet)
      */
     @Override
     public void visit(ShowCharaterSet node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowCollation)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowCollation)
      */
     @Override
     public void visit(ShowCollation node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowColumns)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowColumns)
      */
     @Override
     public void visit(ShowColumns node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowContributors)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowContributors)
      */
     @Override
     public void visit(ShowContributors node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowCreate)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowCreate)
      */
     @Override
     public void visit(ShowCreate node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowDatabases)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowDatabases)
      */
     @Override
     public void visit(ShowDatabases node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowEngine)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowEngine)
      */
     @Override
     public void visit(ShowEngine node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowEngines)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowEngines)
      */
     @Override
     public void visit(ShowEngines node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowErrors)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowErrors)
      */
     @Override
     public void visit(ShowErrors node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowEvents)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowEvents)
      */
     @Override
     public void visit(ShowEvents node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowFunctionCode)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowFunctionCode)
      */
     @Override
     public void visit(ShowFunctionCode node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowFunctionStatus)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowFunctionStatus)
      */
     @Override
     public void visit(ShowFunctionStatus node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowGrants)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowGrants)
      */
     @Override
     public void visit(ShowGrants node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowIndex)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowIndex)
      */
     @Override
     public void visit(ShowIndex node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowMasterStatus)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowMasterStatus)
      */
     @Override
     public void visit(ShowMasterStatus node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowOpenTables)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowOpenTables)
      */
     @Override
     public void visit(ShowOpenTables node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowPlugins)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowPlugins)
      */
     @Override
     public void visit(ShowPlugins node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowPrivileges)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowPrivileges)
      */
     @Override
     public void visit(ShowPrivileges node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowProcedureCode)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowProcedureCode)
      */
     @Override
     public void visit(ShowProcedureCode node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowProcedureStatus)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowProcedureStatus)
      */
     @Override
     public void visit(ShowProcedureStatus node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowProcesslist)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowProcesslist)
      */
     @Override
     public void visit(ShowProcesslist node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowProfile)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowProfile)
      */
     @Override
     public void visit(ShowProfile node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowProfiles)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowProfiles)
      */
     @Override
     public void visit(ShowProfiles node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowSlaveHosts)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowSlaveHosts)
      */
     @Override
     public void visit(ShowSlaveHosts node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowSlaveStatus)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowSlaveStatus)
      */
     @Override
     public void visit(ShowSlaveStatus node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowStatus)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowStatus)
      */
     @Override
     public void visit(ShowStatus node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowTables)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowTables)
      */
     @Override
     public void visit(ShowTables node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowTableStatus)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowTableStatus)
      */
     @Override
     public void visit(ShowTableStatus node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowTriggers)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowTriggers)
      */
     @Override
     public void visit(ShowTriggers node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowVariables)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowVariables)
      */
     @Override
     public void visit(ShowVariables node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.ShowWarnings)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.ShowWarnings)
      */
     @Override
     public void visit(ShowWarnings node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DescTableStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DescTableStatement)
      */
     @Override
     public void visit(DescTableStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.DALSetStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.DALSetStatement)
      */
     @Override
     public void visit(DALSetStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.DALSetNamesStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.DALSetNamesStatement)
      */
     @Override
     public void visit(DALSetNamesStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dal.DALSetCharacterSetStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dal.DALSetCharacterSetStatement)
      */
     @Override
     public void visit(DALSetCharacterSetStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLCallStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLCallStatement)
      */
     @Override
     public void visit(DMLCallStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLDeleteStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLDeleteStatement)
      */
     @Override
     public void visit(DMLDeleteStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLInsertStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLInsertStatement)
      */
     @Override
     public void visit(DMLInsertStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLReplaceStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLReplaceStatement)
      */
     @Override
     public void visit(DMLReplaceStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLSelectStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLSelectStatement)
      */
     @Override
     public void visit(DMLSelectStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLSelectUnionStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLSelectUnionStatement)
      */
     @Override
     public void visit(DMLSelectUnionStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.dml.DMLUpdateStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.dml.DMLUpdateStatement)
      */
     @Override
     public void visit(DMLUpdateStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.mts.MTSSetTransactionStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.mts.MTSSetTransactionStatement)
      */
     @Override
     public void visit(MTSSetTransactionStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.mts.MTSSavepointStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.mts.MTSSavepointStatement)
      */
     @Override
     public void visit(MTSSavepointStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.mts.MTSReleaseStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.mts.MTSReleaseStatement)
      */
     @Override
     public void visit(MTSReleaseStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.mts.MTSRollbackStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.mts.MTSRollbackStatement)
      */
     @Override
     public void visit(MTSRollbackStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLTruncateStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLTruncateStatement)
      */
     @Override
     public void visit(DDLTruncateStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLAlterTableStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLAlterTableStatement)
      */
     @Override
     public void visit(DDLAlterTableStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLCreateIndexStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLCreateIndexStatement)
      */
     @Override
     public void visit(DDLCreateIndexStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLCreateTableStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLCreateTableStatement)
      */
     @Override
     public void visit(DDLCreateTableStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLRenameTableStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLRenameTableStatement)
      */
     @Override
     public void visit(DDLRenameTableStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLDropIndexStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLDropIndexStatement)
      */
     @Override
     public void visit(DDLDropIndexStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.ddl.DDLDropTableStatement)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.ddl.DDLDropTableStatement)
      */
     @Override
     public void visit(DDLDropTableStatement node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.extension.ExtDDLCreatePolicy)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.extension.ExtDDLCreatePolicy)
      */
     @Override
     public void visit(ExtDDLCreatePolicy node) {
     }
 
     /** 
-     * @see com.baidu.hsb.parser.visitor.SQLASTVisitor#visit(com.baidu.hsb.parser.ast.stmt.extension.ExtDDLDropPolicy)
+     * @see io.candice.parser.visitor.SQLASTVisitor#visit(io.candice.parser.ast.stmt.extension.ExtDDLDropPolicy)
      */
     @Override
     public void visit(ExtDDLDropPolicy node) {

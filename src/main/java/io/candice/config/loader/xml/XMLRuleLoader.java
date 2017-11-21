@@ -1,6 +1,8 @@
 package io.candice.config.loader.xml;
 
 import io.candice.config.model.TableRuleConfig;
+import io.candice.config.util.ConfigException;
+import io.candice.config.util.ConfigUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -16,6 +18,7 @@ import java.util.*;
  * 作者: yinwenjie
  * 日期: 2017-09-16
  */
+@SuppressWarnings("unchecked")
 public class XMLRuleLoader {
 
     //private final static String                DEFAULT_DTD = "/rule.dtd";

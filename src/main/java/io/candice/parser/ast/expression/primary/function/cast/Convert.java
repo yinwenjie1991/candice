@@ -1,25 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary.function.cast;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.function.FunctionExpression;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
-
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.function.FunctionExpression;
+import io.candice.parser.visitor.SQLASTVisitor;
 import java.util.List;
 
-/**
- * 
- * 
- * @author xiongzhao@baidu.com
- * @version $Id: Convert.java, v 0.1 2013年12月26日 下午8:10:09 HI:brucest0078 Exp $
- */
 public class Convert extends FunctionExpression {
-    /**
-     * Either {@link transcodeName} or {@link typeName} is null
-     */
+
     private final String transcodeName;
 
     public Convert(Expression arg, String transcodeName) {

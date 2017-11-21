@@ -5,7 +5,6 @@ import io.candice.net.connection.ServerConnection;
 import io.candice.net.handler.FrontendPrivileges;
 import io.candice.net.mysql.OkPacket;
 
-import java.nio.ByteBuffer;
 import java.util.Set;
 
 /**

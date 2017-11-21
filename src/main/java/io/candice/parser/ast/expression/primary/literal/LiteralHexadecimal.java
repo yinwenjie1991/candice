@@ -1,18 +1,11 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary.literal;
 
-import com.baidu.hsb.parser.util.ParseString;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.util.ParseString;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class LiteralHexadecimal extends Literal {
     private byte[] bytes;
     private final String introducer;
@@ -60,7 +53,6 @@ public class LiteralHexadecimal extends Literal {
         }
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

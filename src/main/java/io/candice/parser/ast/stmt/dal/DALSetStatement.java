@@ -1,22 +1,15 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.stmt.dal;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.primary.VariableExpression;
-import com.baidu.hsb.parser.ast.stmt.SQLStatement;
-import com.baidu.hsb.parser.util.Pair;
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.primary.VariableExpression;
+import io.candice.parser.ast.stmt.SQLStatement;
+import io.candice.parser.util.Pair;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author xiongzhao@baidu.com
- */
 public class DALSetStatement implements SQLStatement {
     private final List<Pair<VariableExpression, Expression>> assignmentList;
 
@@ -37,7 +30,6 @@ public class DALSetStatement implements SQLStatement {
         return assignmentList;
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

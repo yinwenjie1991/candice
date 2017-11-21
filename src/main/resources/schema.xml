@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<candice>
+    <schema name="candice_master_shard">
+        <table name="TEST_SHARD" dataNode="localDataMasterDN$0-9" rule="rule1" />
+
+    </schema>
+    <dataNode name="localDataMasterDN">
+        <property name="dataSource">
+            <!--主库-->
+            <dataSourceRef>localDataMasterDN$0-9</dataSourceRef>
+            <!--备库-->
+            <!--<dataSourceRef>bankDataSlaveDN$0-9</dataSourceRef>-->
+        </property>
+        <!--主备库读写规则-->
+        <!--<property name="rwRule">m:1,s:1</property>-->
+        <property name="poolSize">20</property>
+        <property name="heartbeatSQL">select user()</property>
+    </dataNode>
+    <dataSource name="localDataMasterDN" type="mysql">
+        <property name="location">
+            <location>localhost:3306/candice_test_shard_$0-9</location>
+        </property>
+        <property name="user">root</property>
+        <property name="password">123</property>
+    </dataSource>
+
+
+</candice>

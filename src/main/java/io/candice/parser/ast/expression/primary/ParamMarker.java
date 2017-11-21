@@ -1,10 +1,6 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.primary;
 
-import com.baidu.hsb.parser.visitor.SQLASTVisitor;
+import io.candice.parser.visitor.SQLASTVisitor;
 
 import java.util.Map;
 
@@ -50,7 +46,6 @@ public class ParamMarker extends PrimaryExpression {
         return parameters.get(paramIndex);
     }
 
-    @Override
     public void accept(SQLASTVisitor visitor) {
         visitor.visit(this);
     }

@@ -1,16 +1,5 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.util;
 
-
-/**
- * 
- * 
- * @author xiongzhao@baidu.com
- * @version $Id: ArrayUtil.java, v 0.1 2013年12月25日 下午5:15:51 HI:brucest0078 Exp $
- */
 public class ArrayUtil {
     public static boolean equals(String str1, String str2) {
         if (str1 == null) {

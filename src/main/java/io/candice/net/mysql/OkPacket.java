@@ -51,6 +51,7 @@ public class OkPacket extends MySQLPacket {
         }
     }
 
+    @Override
     public void write(ChannelHandlerContext context) {
         ByteBuf buf = context.alloc().buffer();
         BufferUtil.writeUB3(buf, calcPacketSize());

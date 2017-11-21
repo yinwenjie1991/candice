@@ -1,22 +1,12 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.parser.ast.expression.logical;
 
-import com.baidu.hsb.parser.ast.expression.Expression;
-import com.baidu.hsb.parser.ast.expression.UnaryOperatorExpression;
-import com.baidu.hsb.parser.ast.expression.primary.literal.LiteralBoolean;
-import com.baidu.hsb.parser.util.ExprEvalUtils;
+import io.candice.parser.ast.expression.Expression;
+import io.candice.parser.ast.expression.UnaryOperatorExpression;
+import io.candice.parser.ast.expression.primary.literal.LiteralBoolean;
+import io.candice.parser.util.ExprEvalUtils;
 
 import java.util.Map;
 
-/**
- * 
- * 
- * @author xiongzhao@baidu.com
- * @version $Id: LogicalNotExpression.java, v 0.1 2013年12月26日 下午6:18:06 HI:brucest0078 Exp $
- */
 public class LogicalNotExpression extends UnaryOperatorExpression {
     public LogicalNotExpression(Expression operand) {
         super(operand, PRECEDENCE_LOGICAL_NOT);

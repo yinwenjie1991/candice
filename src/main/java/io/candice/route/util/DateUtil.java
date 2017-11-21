@@ -1,7 +1,3 @@
-/**
- * Baidu.com,Inc.
- * Copyright (c) 2000-2013 All Rights Reserved.
- */
 package io.candice.route.util;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -13,12 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * 
- * 
- * @author xiongzhao@baidu.com
- * @version $Id: DateUtil.java, v 0.1 2013年12月21日 下午6:26:02 HI:brucest0078 Exp $
- */
 public final class DateUtil extends DateUtils {
 
     /** yyyyMMdd */

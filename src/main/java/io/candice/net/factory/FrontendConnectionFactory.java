@@ -9,20 +9,25 @@ import io.netty.channel.ChannelHandlerContext;
  * 作者: yinwenjie
  * 日期: 2017-10-10
  */
-public class FrontendConnectionFactory {
+public abstract class FrontendConnectionFactory {
 
     private static final AcceptIdGenerator ID_GENERATOR = new AcceptIdGenerator();
 
     protected static String charset = "utf8";
 
-    public static FrontendConnection make() {
-        FrontendConnection frontendConnection = new FrontendConnection();
-        frontendConnection.setId(ID_GENERATOR.getId());
-//        serverConnection.setChannelHandlerContext(context);
-        frontendConnection.setPrivileges(new CandicePrivileges());
-        frontendConnection.setCharset(charset);
-        return frontendConnection;
+    public FrontendConnection make() {
+//        FrontendConnection frontendConnection = new FrontendConnection();
+        FrontendConnection connection = getConnection();
+        connection.setId(ID_GENERATOR.getId());
+        connection.setPrivileges(new CandicePrivileges());
+        connection.setCharset(charset);
+        return connection;
     }
+
+    /**
+     * 在此处对ServerConnection与ManagerConnection做不同配置
+     */
+    protected abstract FrontendConnection getConnection();
 
     /**
      * 前端连接ID生成器
