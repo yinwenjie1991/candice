@@ -104,7 +104,10 @@ public class FrontendAuthenticatorHandler extends ChannelInboundHandlerAdapter{
             default:
                 success(authPacket, ctx);
         }
-        super.channelRead(ctx, msg);
+
+        // 这里不能再调用, 否则会使得包的顺序错乱
+        // candice会多发一个包，客户端则会慢一个包，即当前收到的包是上一个指令的包
+//        super.channelRead(ctx, msg);
     }
 
 

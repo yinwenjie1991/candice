@@ -65,6 +65,6 @@ public class SelectVersionComment {
         buf = lastEof.writeBuf(buf);
 
         // post write
-        c.getChannelHandlerContext().writeAndFlush(buf);
+        c.writeByteBuf(buf);
     }
 }

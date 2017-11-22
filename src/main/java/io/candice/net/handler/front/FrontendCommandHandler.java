@@ -21,6 +21,7 @@ public class FrontendCommandHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+//        System.out.println("FrontendCommandHandler execute");
         byte[] data = (byte[]) msg;
 
         switch (data[4]) {
