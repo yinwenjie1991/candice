@@ -76,7 +76,7 @@ public class BackendMySQLAuthenticatorHandler extends ChannelInboundHandlerAdapt
         }
 
         //调用下一个 handler的 channelRead
-        super.channelRead(ctx, msg);
+//        super.channelRead(ctx, msg);
     }
 
     private void auth323(byte packetId) {
