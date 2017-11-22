@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <rule>
-
     <tableRule name="rule1" forceHit="true">
         <columns>flux_no</columns>
         <dbRuleList>
@@ -31,5 +29,4 @@
 				]]>
         </tbPrefix>
     </tableRule>
-
 </rule>

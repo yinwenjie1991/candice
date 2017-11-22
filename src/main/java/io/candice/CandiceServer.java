@@ -63,7 +63,7 @@ public class CandiceServer {
         configConnector(nettyConnector);
         //init mysql connections
         for (MySQLDataNode node : config.getDataNodes().values()) {
-            //目前初始连接暂时定为1，后面根据需求配置修改
+            //目前初始连接暂时定为5，后面根据需求配置修改
             node.init(5, 0);
         }
 
