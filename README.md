@@ -1,5 +1,5 @@
-#candice 
-##mysql分库分表中间件
+# candice 
+## mysql分库分表中间件
 > 借鉴cobar以及heisenberg
 - 通讯层使用netty实现
 1. 前端交互frontendConnection基于netty实现mysql协议的服务端
